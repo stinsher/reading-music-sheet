@@ -143,22 +143,24 @@ document.addEventListener('DOMContentLoaded', () => {
         // Draw Note
         const noteEl = document.createElement('div');
         noteEl.className = 'note';
-        const basePosition = 110; // Base position for Treble E4 or Bass G2 (bottom line of staff)
+        const basePosition = 100; // Corrected base position for centering 20px notes on lines.
         const notePosition = basePosition - note.position * 10;
         noteEl.style.top = `${notePosition}px`;
         staffContainer.appendChild(noteEl);
 
-        // Draw Ledger Lines based on position
-        if (note.position <= -2) { // Treble C4
+        // Draw Ledger Lines based on position (now correctly calculated)
+        if (note.position <= -2) { // e.g., Treble C4
              const ledger = document.createElement('div');
              ledger.className = 'ledger-line';
-             ledger.style.top = `${basePosition - -2 * 10 + 8}px`;
+             // A note at pos -2 has its center at top 120px. The ledger line goes there.
+             ledger.style.top = `${basePosition - (-2 * 10)}px`;
              staffContainer.appendChild(ledger);
         }
-        if (note.position >= 10) { // Treble A5 or Bass C4
+        if (note.position >= 10) { // e.g., Treble A5 or Bass C4
              const ledger = document.createElement('div');
              ledger.className = 'ledger-line';
-             ledger.style.top = `${basePosition - 10 * 10 + 8}px`;
+             // A note at pos 10 has its center at top 0px. The ledger line goes there.
+             ledger.style.top = `${basePosition - (10 * 10)}px`;
              staffContainer.appendChild(ledger);
         }
     }
