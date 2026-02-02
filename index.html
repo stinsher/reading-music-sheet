@@ -1,14 +1,68 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>악보 읽기 훈련 - 음표 빨리 읽기 게임</title>
+    <meta name="description" content="재미있는 게임을 통해 악보 읽는 속도를 향상시켜보세요. 초급, 중급, 고급 난이도별 훈련을 제공하며, 높은음자리표와 낮은음자리표 읽기를 모두 연습할 수 있습니다.">
+    <meta name="keywords" content="악보 읽기, 음표 읽기, 음악 훈련, 계이름 공부, 시창, 악보 게임, 높은음자리표, 낮은음자리표">
+    <meta name="author" content="Reading Music Sheet">
+    <meta property="og:title" content="악보 읽기 훈련 - 음표 빨리 읽기 게임">
+    <meta property="og:description" content="재미있는 게임으로 악보 읽는 속도를 향상시키세요. 다양한 난이도를 제공합니다.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="YOUR_WEBSITE_URL_HERE">
+    <meta property="og:image" content="YOUR_OG_IMAGE_URL_HERE">
+
+    <!-- Google AdSense Placeholder -->
+    <!-- 구글 애드센스 승인 후 받은 코드를 이 곳에 붙여넣으세요. -->
+    <!-- <script async src="https://pagead2.googlesyndication.com/page/js/adsbygoogle.js?client=YOUR_ADSENSE_CLIENT_ID" crossorigin="anonymous"></script> -->
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <header>
+        <button id="home-btn" class="header-btn">홈</button>
+        <h1>악보 읽기 훈련</h1>
+        <button id="theme-toggle-btn" class="header-btn">🌙</button>
+    </header>
+
+    <main>
+        <section id="home-screen" class="screen active">
+            <h2>난이도 선택</h2>
+            <div class="difficulty-options">
+                <button class="difficulty-btn" data-difficulty="beginner">초급</button>
+                <button class="difficulty-btn" data-difficulty="intermediate">중급</button>
+                <button class="difficulty-btn" data-difficulty="advanced">고급</button>
+            </div>
+            <div class="info">
+                <p><strong>초급:</strong> 높은음자리표 / 기본 음역</p>
+                <p><strong>중급:</strong> 높은음자리표 / 덧줄 포함</p>
+                <p><strong>고급:</strong> 낮은음자리표 / 덧줄 포함</p>
+            </div>
+        </section>
+
+        <section id="game-screen" class="screen">
+            <div id="game-info">
+                <span id="level-display"></span>
+                <span id="timer-display">10</span>
+            </div>
+            <div id="staff-container">
+                <!-- 악보는 여기에 동적으로 생성됩니다 -->
+            </div>
+            <div id="answer-options">
+                <!-- 선택지는 여기에 동적으로 생성됩니다 -->
+            </div>
+            <div id="feedback"></div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Google AdSense Ad Unit Placeholder -->
+        <!-- 애드센스 광고 단위 코드를 이 곳에 붙여넣을 수 있습니다. -->
+    </footer>
+
+    <script src="main.js"></script>
 </body>
 </html>
