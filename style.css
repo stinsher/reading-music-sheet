@@ -251,3 +251,40 @@ main {
 
 .dark-mode .correct { color: var(--correct-color-dark); }
 .dark-mode .incorrect { color: var(--incorrect-color-dark); }
+
+/* --- Responsive Design --- */
+@media (max-width: 600px) {
+    header {
+        padding: 0.5rem 1rem;
+    }
+    header h1 {
+        font-size: 1.2rem;
+    }
+    main {
+        padding: 1rem;
+    }
+    #home-screen h2 {
+        font-size: 1.5rem;
+    }
+    .difficulty-options-grid {
+        grid-template-columns: 1fr;
+    }
+    .difficulty-btn {
+        font-size: 1rem;
+        padding: 0.8rem 1rem;
+    }
+    .info {
+        margin-top: 2rem;
+        padding: 1rem;
+    }
+    .info p {
+        font-size: 0.9rem;
+    }
+    .answer-btn {
+        font-size: 1.2rem;
+    }
+    .clef {
+        font-size: 70px;
+        left: 0;
+    }
+}

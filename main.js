@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentDifficulty = null;
     let currentNote = null; // For single notes and chord roots
     let currentChord = null; // For advanced level
+    let score = 0;
     let timer;
     let timeLeft = 10;
     let isChecking = false;
@@ -45,6 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const koreanNotes = ['도', '레', '미', '파', '솔', '라', '시'];
+
+    const levelOrder = ['beginner_treble', 'beginner_bass', 'intermediate_1', 'intermediate_2', 'advanced'];
 
     const difficultySettings = {
         beginner_treble: {
@@ -80,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Core Logic ---
     function startGame(difficulty) {
         currentDifficulty = difficulty;
+        score = 0; // Reset score for the new level
         levelDisplay.textContent = difficultySettings[difficulty].displayText;
         showScreen('game-screen');
         nextQuestion();
@@ -123,14 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
         staffContainer.innerHTML = '';
         drawStaff(clef);
         
-        // Sort notes by position to handle horizontal collision
         chordNotes.sort((a, b) => a.p - b.p);
         let lastPosition = -100;
         let alternateSide = false;
 
         chordNotes.forEach(note => {
             let left = '48%';
-            if (Math.abs(note.p - lastPosition) <= 1) { // If notes are a 2nd apart
+            if (Math.abs(note.p - lastPosition) <= 1) {
                 alternateSide = !alternateSide;
                 left = alternateSide ? '42%' : '54%';
             } else {
@@ -167,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function drawLedgerLines(note) {
         const basePosition = 100;
-        // Notes below staff
         if (note.p <= -2) {
             for (let p = -2; p >= note.p; p -= 2) {
                 const ledger = document.createElement('div');
@@ -176,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 staffContainer.appendChild(ledger);
             }
         }
-        // Notes above staff
         if (note.p >= 10) {
             for (let p = 10; p <= note.p; p += 2) {
                 const ledger = document.createElement('div');
@@ -208,19 +209,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isChecking) return;
         isChecking = true;
         clearInterval(timer);
+
         if (selectedAnswer === currentNote.korean) {
-            feedback.textContent = '정답!';
+            score++;
+            feedback.textContent = `정답! (${score}/30)`;
             feedback.className = 'correct';
-            setTimeout(nextQuestion, 1000);
+
+            if (score >= 30) {
+                const currentLevelIndex = levelOrder.indexOf(currentDifficulty);
+                if (currentLevelIndex < levelOrder.length - 1) {
+                    const nextLevel = levelOrder[currentLevelIndex + 1];
+                    setTimeout(() => startGame(nextLevel), 1500);
+                } else {
+                    feedback.textContent = "모든 단계를 완료했습니다! 축하합니다!";
+                    setTimeout(goHome, 2000);
+                }
+                return;
+            }
         } else {
             feedback.textContent = '오답!';
             feedback.className = 'incorrect';
-            setTimeout(() => {
-                feedback.textContent = '';
-                isChecking = false;
-                startTimer();
-            }, 1500);
         }
+        
+        setTimeout(nextQuestion, 1000);
     }
 
     function startTimer() {
@@ -239,11 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 isChecking = true;
                 feedback.textContent = "시간 초과!";
                 feedback.className = 'incorrect';
-                setTimeout(() => {
-                    feedback.textContent = '';
-                    isChecking = false;
-                    startTimer();
-                }, 1500);
+                setTimeout(nextQuestion, 1000);
             }
         }, 1000);
     }
