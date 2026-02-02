@@ -19,22 +19,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let timeLeft = 10;
     let isChecking = false; // Prevent multiple clicks
 
-    // --- Note Data & Definitions ---
+    // --- Note Data & Definitions (with corrected positions) ---
     const notes = {
-        C4: { name: 'C4', korean: '도', position: 0 },
-        D4: { name: 'D4', korean: '레', position: 1 },
-        E4: { name: 'E4', korean: '미', position: 2 },
-        F4: { name: 'F4', korean: '파', position: 3 },
-        G4: { name: 'G4', korean: '솔', position: 4 },
-        A4: { name: 'A4', korean: '라', position: 5 },
-        B4: { name: 'B4', korean: '시', position: 6 },
-        C5: { name: 'C5', korean: '도', position: 7 },
-        D5: { name: 'D5', korean: '레', position: 8 },
-        E5: { name: 'E5', korean: '미', position: 9 },
-        F5: { name: 'F5', korean: '파', position: 10 },
-        G5: { name: 'G5', korean: '솔', position: 11 },
-        A5: { name: 'A5', korean: '라', position: 12 },
+        // Treble Clef Notes
+        C4: { name: 'C4', korean: '도', position: -2 },
+        D4: { name: 'D4', korean: '레', position: -1 },
+        E4: { name: 'E4', korean: '미', position: 0 },
+        F4: { name: 'F4', korean: '파', position: 1 },
+        G4: { name: 'G4', korean: '솔', position: 2 },
+        A4: { name: 'A4', korean: '라', position: 3 },
+        B4: { name: 'B4', korean: '시', position: 4 },
+        C5: { name: 'C5', korean: '도', position: 5 },
+        D5: { name: 'D5', korean: '레', position: 6 },
+        E5: { name: 'E5', korean: '미', position: 7 },
+        F5: { name: 'F5', korean: '파', position: 8 },
+        G5: { name: 'G5', korean: '솔', position: 9 },
+        A5: { name: 'A5', korean: '라', position: 10 },
 
+        // Bass Clef Notes
         G2: { name: 'G2', korean: '솔', position: 0 },
         A2: { name: 'A2', korean: '라', position: 1 },
         B2: { name: 'B2', korean: '시', position: 2 },
@@ -45,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         G3: { name: 'G3', korean: '솔', position: 7 },
         A3: { name: 'A3', korean: '라', position: 8 },
         B3: { name: 'B3', korean: '시', position: 9 },
-        C4_bass: { name: 'C4', korean: '도', position: 10 },
+        C4_bass: { name: 'C4', korean: '도', position: 10 }, // Keyed for uniqueness
     };
 
     const koreanNotes = ['도', '레', '미', '파', '솔', '라', '시'];
@@ -135,28 +137,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const clefEl = document.createElement('div');
         clefEl.className = 'clef';
         clefEl.innerHTML = isTreble ? '&#x1D11E;' : '&#x1D122;'; // Treble and Bass clef unicode
-        clefEl.style.top = isTreble ? '15px' : '45px';
+        clefEl.style.top = isTreble ? '25px' : '45px';
         staffContainer.appendChild(clefEl);
 
         // Draw Note
         const noteEl = document.createElement('div');
         noteEl.className = 'note';
-        const basePosition = isTreble ? 110 : 120; // Base position for Treble F4 / Bass A2
+        const basePosition = 110; // Base position for Treble E4 or Bass G2 (bottom line of staff)
         const notePosition = basePosition - note.position * 10;
         noteEl.style.top = `${notePosition}px`;
         staffContainer.appendChild(noteEl);
 
-        // Draw Ledger Lines
-        const ledgerLinePosition = notePosition + 8;
-        if ((isTreble && note.name === 'C4') || note.name === 'A5') { // C4 or A5 on Treble
+        // Draw Ledger Lines based on position
+        if (note.position <= -2) { // Treble C4
              const ledger = document.createElement('div');
              ledger.className = 'ledger-line';
-             ledger.style.top = `${note.name === 'C4' ? 138 : 28}px`;
+             ledger.style.top = `${basePosition - -2 * 10 + 8}px`;
              staffContainer.appendChild(ledger);
-        } else if (!isTreble && (note.name === 'G2' || note.name === 'C4_bass')) { // G2 or C4 on Bass
+        }
+        if (note.position >= 10) { // Treble A5 or Bass C4
              const ledger = document.createElement('div');
              ledger.className = 'ledger-line';
-             ledger.style.top = `${note.name === 'G2' ? 128 : 28}px`;
+             ledger.style.top = `${basePosition - 10 * 10 + 8}px`;
              staffContainer.appendChild(ledger);
         }
     }
