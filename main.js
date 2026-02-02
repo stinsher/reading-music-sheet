@@ -178,8 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i >= note.position; i -= 2) {
                 const ledger = document.createElement('div');
                 ledger.className = 'ledger-line';
-                // Ledger lines at 110px, 130px, 150px etc.
-                ledger.style.top = `${basePosition - i * 10 + 10}px`; // +10 to center on note
+                // (basePosition - i * 10) gives the note's 'top' position. Add 9px to center the 2px line under the 20px note.
+                ledger.style.top = `${(basePosition - i * 10) + 9}px`;
                 staffContainer.appendChild(ledger);
             }
         }
