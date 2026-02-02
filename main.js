@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         intermediate_1: {
             clef: 'random',
             trebleNotes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5'], // Added D4, G5
-            bassNotes: ['C4_bass', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'A3'],
+            bassNotes: ['C4_bass', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3'],
             displayText: "중급 1 (랜덤)"
         },
         intermediate_2: {
