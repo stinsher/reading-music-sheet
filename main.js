@@ -52,17 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const difficultySettings = {
         beginner_treble: {
             clef: 'treble',
-            notes: ['C4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5'],
+            notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5'], // Added D4, G5
             displayText: "초급 (높은음자리표)"
         },
         beginner_bass: {
             clef: 'bass',
-            notes: ['C4_bass', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'A3'],
+            notes: ['C4_bass', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3'],
             displayText: "초급 (낮은음자리표)"
         },
         intermediate_1: {
             clef: 'random',
-            trebleNotes: ['C4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5'],
+            trebleNotes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5'], // Added D4, G5
             bassNotes: ['C4_bass', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'A3'],
             displayText: "중급 1 (랜덤)"
         },
@@ -98,17 +98,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const level = difficultySettings[currentDifficulty];
         const clef = level.clef === 'random' ? (Math.random() < 0.5 ? 'treble' : 'bass') : level.clef;
 
+        let noteToRender;
+        let noteLeftPosition = '45%'; // Default for single notes
+
         if (currentDifficulty === 'advanced') {
             const rootNotes = clef === 'treble' ? level.chordRootsTreble : level.chordRootsBass;
             const rootNoteName = rootNotes[Math.floor(Math.random() * rootNotes.length)];
-            currentNote = notes[rootNoteName];
+            currentNote = notes[rootNoteName]; // currentNote is the root of the chord for answer checking
             currentChord = chords[clef][rootNoteName].map(noteName => notes[noteName]);
-            renderChord(currentChord, clef);
+            noteToRender = currentChord; // Array of notes for rendering
         } else {
             const noteNames = clef === 'treble' ? (level.trebleNotes || level.notes) : (level.bassNotes || level.notes);
             const randomNoteName = noteNames[Math.floor(Math.random() * noteNames.length)];
             currentNote = notes[randomNoteName];
-            renderSingleNote(currentNote, clef);
+            noteToRender = currentNote; // Single note for rendering
+        }
+        
+        if (currentChord) {
+            renderChord(noteToRender, clef);
+        } else {
+            renderSingleNote(noteToRender, clef); // Passes single note object and default left
         }
         
         generateAnswers(currentNote);
@@ -120,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         staffContainer.innerHTML = '';
         drawStaff(clef);
         drawNote(note, left);
-        drawLedgerLines(note);
+        drawLedgerLines(note, left); // Pass left here
     }
     
     function renderChord(chordNotes, clef) {
@@ -140,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alternateSide = false;
             }
             drawNote(note, left);
-            drawLedgerLines(note);
+            drawLedgerLines(note, left); // Pass left here
             lastPosition = note.p;
         });
     }
@@ -168,20 +177,26 @@ document.addEventListener('DOMContentLoaded', () => {
         staffContainer.appendChild(noteEl);
     }
 
-    function drawLedgerLines(note) {
+    function drawLedgerLines(note, noteLeft) { // New noteLeft parameter
         const basePosition = 100;
+        // Notes below staff
         if (note.p <= -2) {
             for (let p = -2; p >= note.p; p -= 2) {
                 const ledger = document.createElement('div');
                 ledger.className = 'ledger-line';
+                // Adjusted left position to align with note
+                ledger.style.left = `calc(${noteLeft} + 10px - 15px)`; // Note width 20px, ledger width 30px
                 ledger.style.top = `${(basePosition - p * 10) + 9}px`;
                 staffContainer.appendChild(ledger);
             }
         }
+        // Notes above staff
         if (note.p >= 10) {
             for (let p = 10; p <= note.p; p += 2) {
                 const ledger = document.createElement('div');
                 ledger.className = 'ledger-line';
+                // Adjusted left position to align with note
+                ledger.style.left = `calc(${noteLeft} + 10px - 15px)`; // Note width 20px, ledger width 30px
                 ledger.style.top = `${(basePosition - p * 10) + 9}px`;
                 staffContainer.appendChild(ledger);
             }
