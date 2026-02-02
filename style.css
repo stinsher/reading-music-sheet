@@ -78,11 +78,23 @@ main {
     margin-bottom: 2rem;
 }
 
-.difficulty-options {
+.difficulty-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto 1rem auto;
+}
+
+.difficulty-options-advanced {
     display: flex;
     justify-content: center;
-    gap: 1rem;
     margin-bottom: 2rem;
+}
+
+.difficulty-options-advanced .difficulty-btn {
+    width: 100%;
+    max-width: 600px;
 }
 
 .difficulty-btn {

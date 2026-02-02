@@ -31,15 +31,20 @@
     <main>
         <section id="home-screen" class="screen active">
             <h2>난이도 선택</h2>
-            <div class="difficulty-options">
-                <button class="difficulty-btn" data-difficulty="beginner">초급</button>
-                <button class="difficulty-btn" data-difficulty="intermediate">중급</button>
-                <button class="difficulty-btn" data-difficulty="advanced">고급</button>
+            <div class="difficulty-options-grid">
+                <button class="difficulty-btn" data-difficulty="beginner_treble">초급 (높은음자리표)</button>
+                <button class="difficulty-btn" data-difficulty="beginner_bass">초급 (낮은음자리표)</button>
+                <button class="difficulty-btn" data-difficulty="intermediate_1">중급 1</button>
+                <button class="difficulty-btn" data-difficulty="intermediate_2">중급 2</button>
+            </div>
+            <div class="difficulty-options-advanced">
+                 <button class="difficulty-btn" data-difficulty="advanced">고급 (3화음)</button>
             </div>
             <div class="info">
-                <p><strong>초급:</strong> 높은음자리표 / 기본 음역</p>
-                <p><strong>중급:</strong> 높은음자리표 / 덧줄 포함</p>
-                <p><strong>고급:</strong> 낮은음자리표 / 덧줄 포함</p>
+                <p><strong>초급:</strong> 음자리표 고정, 덧줄 1개 (가온도)</p>
+                <p><strong>중급 1:</strong> 음자리표 랜덤, 덧줄 1개 (가온도)</p>
+                <p><strong>중급 2:</strong> 음자리표 랜덤, 덧줄 3개</p>
+                <p><strong>고급:</strong> 중급 2와 동일한 음역, 3화음으로 표시</p>
             </div>
         </section>
 
