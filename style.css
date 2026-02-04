@@ -36,11 +36,10 @@ body {
 
 header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
     border-bottom: 1px solid;
-    position: relative;
 }
 
 .dark-mode header { border-color: var(--border-color-dark); }
@@ -49,25 +48,14 @@ header {
 header h1 {
     font-size: 1.5rem;
     margin: 0;
-    text-align: center;
-    width: 100%;
 }
 
 .header-btn {
-    position: absolute;
     background: none;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
     padding: 0.5rem;
-}
-
-#home-btn {
-    left: 1rem;
-}
-
-#theme-toggle-btn {
-    right: 1rem;
 }
 
 .dark-mode .header-btn { color: var(--text-color-dark); }
@@ -268,10 +256,26 @@ main {
 /* --- Responsive Design --- */
 @media (max-width: 600px) {
     header {
+        display: grid;
+        grid-template-areas:
+            "title title"
+            "home theme";
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
         padding: 0.5rem 1rem;
     }
     header h1 {
+        grid-area: title;
+        text-align: center;
         font-size: 1.2rem;
+    }
+    #home-btn {
+        grid-area: home;
+        justify-self: start;
+    }
+    #theme-toggle-btn {
+        grid-area: theme;
+        justify-self: end;
     }
     main {
         padding: 1rem;
