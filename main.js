@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     Object.keys(notes).forEach(key => {
         const noteName = key.replace('_bass', '').slice(0, 1);
-        const koreanMap = { C: '도', D: '레', E: '미', F: '파', G: '솔', A: '라', B: '시' };
+        const englishMap = { C: 'C', D: 'D', E: 'E', F: 'F', G: 'G', A: 'A', B: 'B' };
         notes[key].name = key;
-        notes[key].korean = koreanMap[noteName];
+        notes[key].english = englishMap[noteName];
     });
 
     const chords = {
@@ -45,38 +45,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    const koreanNotes = ['도', '레', '미', '파', '솔', '라', '시'];
+    const solfegeMap = { C: 'DO', D: 'RE', E: 'MI', F: 'FA', G: 'SOL', A: 'LA', B: 'SI' };
+    const englishNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'].map(note => ({
+        english: note,
+        solfege: solfegeMap[note]
+    }));
 
     const levelOrder = ['beginner_treble', 'beginner_bass', 'intermediate_1', 'intermediate_2', 'advanced'];
 
     const difficultySettings = {
         beginner_treble: {
             clef: 'treble',
-            notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5'], // Added D4, G5
-            displayText: "초급 (높은음자리표)"
+            notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5'],
+            displayText: "Beginner (Treble Clef)"
         },
         beginner_bass: {
             clef: 'bass',
             notes: ['C4_bass', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3'],
-            displayText: "초급 (낮은음자리표)"
+            displayText: "Beginner (Bass Clef)"
         },
         intermediate_1: {
             clef: 'random',
-            trebleNotes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5'], // Added D4, G5
+            trebleNotes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5'],
             bassNotes: ['C4_bass', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3'],
-            displayText: "중급 1 (랜덤)"
+            displayText: "Intermediate 1 (Random Clef)"
         },
         intermediate_2: {
             clef: 'random',
             trebleNotes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5', 'C6'],
             bassNotes: ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4_bass', 'D4_bass', 'E4_bass'],
-            displayText: "중급 2 (랜덤)"
+            displayText: "Intermediate 2 (Random Clef)"
         },
         advanced: {
             clef: 'random',
             chordRootsTreble: Object.keys(chords.treble),
             chordRootsBass: Object.keys(chords.bass),
-            displayText: "고급 (3화음)"
+            displayText: "Advanced (Chords)"
         }
     };
 
@@ -106,18 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const rootNoteName = rootNotes[Math.floor(Math.random() * rootNotes.length)];
             currentNote = notes[rootNoteName]; // currentNote is the root of the chord for answer checking
             currentChord = chords[clef][rootNoteName].map(noteName => notes[noteName]);
-            noteToRender = currentChord; // Array of notes for rendering
+            renderChord(currentChord, clef);
         } else {
             const noteNames = clef === 'treble' ? (level.trebleNotes || level.notes) : (level.bassNotes || level.notes);
             const randomNoteName = noteNames[Math.floor(Math.random() * noteNames.length)];
             currentNote = notes[randomNoteName];
-            noteToRender = currentNote; // Single note for rendering
-        }
-        
-        if (currentChord) {
-            renderChord(noteToRender, clef);
-        } else {
-            renderSingleNote(noteToRender, clef); // Passes single note object and default left
+            renderSingleNote(currentNote, clef);
         }
         
         generateAnswers(currentNote);
@@ -129,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         staffContainer.innerHTML = '';
         drawStaff(clef);
         drawNote(note, left);
-        drawLedgerLines(note, left); // Pass left here
+        drawLedgerLines(note, left);
     }
     
     function renderChord(chordNotes, clef) {
@@ -149,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alternateSide = false;
             }
             drawNote(note, left);
-            drawLedgerLines(note, left); // Pass left here
+            drawLedgerLines(note, left);
             lastPosition = note.p;
         });
     }
@@ -177,15 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
         staffContainer.appendChild(noteEl);
     }
 
-    function drawLedgerLines(note, noteLeft) { // New noteLeft parameter
+    function drawLedgerLines(note, noteLeft) {
         const basePosition = 100;
         // Notes below staff
         if (note.p <= -2) {
             for (let p = -2; p >= note.p; p -= 2) {
                 const ledger = document.createElement('div');
                 ledger.className = 'ledger-line';
-                // Adjusted left position to align with note
-                ledger.style.left = `calc(${noteLeft} + 10px - 15px)`; // Note width 20px, ledger width 30px
+                ledger.style.left = `calc(${noteLeft} + 10px - 15px)`;
                 ledger.style.top = `${(basePosition - p * 10) + 9}px`;
                 staffContainer.appendChild(ledger);
             }
@@ -195,8 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let p = 10; p <= note.p; p += 2) {
                 const ledger = document.createElement('div');
                 ledger.className = 'ledger-line';
-                // Adjusted left position to align with note
-                ledger.style.left = `calc(${noteLeft} + 10px - 15px)`; // Note width 20px, ledger width 30px
+                ledger.style.left = `calc(${noteLeft} + 10px - 15px)`;
                 ledger.style.top = `${(basePosition - p * 10) + 9}px`;
                 staffContainer.appendChild(ledger);
             }
@@ -206,16 +202,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- UI & Timers ---
     function generateAnswers(correctNote) {
         answerOptions.innerHTML = '';
-        let options = new Set([correctNote.korean]);
+        const correctNoteInfo = {
+            english: correctNote.english,
+            solfege: solfegeMap[correctNote.english]
+        };
+
+        let options = new Map([[correctNoteInfo.english, correctNoteInfo]]);
+        
         while (options.size < 5) {
-            options.add(koreanNotes[Math.floor(Math.random() * koreanNotes.length)]);
+            const randomNote = englishNotes[Math.floor(Math.random() * englishNotes.length)];
+            options.set(randomNote.english, randomNote);
         }
-        const shuffledOptions = Array.from(options).sort(() => Math.random() - 0.5);
+
+        const shuffledOptions = Array.from(options.values()).sort(() => Math.random() - 0.5);
+        
         shuffledOptions.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'answer-btn';
-            btn.textContent = opt;
-            btn.addEventListener('click', () => checkAnswer(opt));
+            btn.textContent = `${opt.english} (${opt.solfege})`;
+            btn.dataset.noteName = opt.english;
+            btn.addEventListener('click', () => checkAnswer(opt.english));
             answerOptions.appendChild(btn);
         });
     }
@@ -225,9 +231,9 @@ document.addEventListener('DOMContentLoaded', () => {
         isChecking = true;
         clearInterval(timer);
 
-        if (selectedAnswer === currentNote.korean) {
+        if (selectedAnswer === currentNote.english) { 
             score++;
-            feedback.textContent = `정답! (${score}/30)`;
+            feedback.textContent = `Correct! (${score}/30)`;
             feedback.className = 'correct';
 
             if (score >= 30) {
@@ -236,13 +242,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     const nextLevel = levelOrder[currentLevelIndex + 1];
                     setTimeout(() => startGame(nextLevel), 1500);
                 } else {
-                    feedback.textContent = "모든 단계를 완료했습니다! 축하합니다!";
+                    feedback.textContent = "All levels completed! Congratulations!";
                     setTimeout(goHome, 2000);
                 }
                 return;
             }
         } else {
-            feedback.textContent = '오답!';
+            feedback.textContent = 'Incorrect!';
             feedback.className = 'incorrect';
         }
         
@@ -263,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(timer);
                 if (isChecking) return;
                 isChecking = true;
-                feedback.textContent = "시간 초과!";
+                feedback.textContent = "Time's up!"; // Translate feedback
                 feedback.className = 'incorrect';
                 setTimeout(nextQuestion, 1000);
             }

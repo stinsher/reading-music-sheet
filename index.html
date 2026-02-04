@@ -1,63 +1,63 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO Meta Tags -->
-    <title>악보 읽기 훈련 - 음표 빨리 읽기 게임</title>
-    <meta name="description" content="재미있는 게임을 통해 악보 읽는 속도를 향상시켜보세요. 초급, 중급, 고급 난이도별 훈련을 제공하며, 높은음자리표와 낮은음자리표 읽기를 모두 연습할 수 있습니다.">
-    <meta name="keywords" content="악보 읽기, 음표 읽기, 음악 훈련, 계이름 공부, 시창, 악보 게임, 높은음자리표, 낮은음자리표">
-    <meta name="author" content="Reading Music Sheet">
-    <meta property="og:title" content="악보 읽기 훈련 - 음표 빨리 읽기 게임">
-    <meta property="og:description" content="재미있는 게임으로 악보 읽는 속도를 향상시키세요. 다양한 난이도를 제공합니다.">
+    <title>Music Sheet Reading Practice - Sight Reading Game</title>
+    <meta name="description" content="Improve your sight-reading speed with a fun and interactive game. Offers beginner, intermediate, and advanced levels for both treble and bass clefs.">
+    <meta name="keywords" content="music reading, sight reading, music training, note identification, music theory, music game, treble clef, bass clef">
+    <meta name="author" content="Music Sight Reading">
+    <meta property="og:title" content="Music Sheet Reading Practice - Sight Reading Game">
+    <meta property="og:description" content="Improve your sight-reading speed with a fun and interactive game. Offers various difficulty levels.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="YOUR_WEBSITE_URL_HERE">
     <meta property="og:image" content="YOUR_OG_IMAGE_URL_HERE">
 
     <!-- Google AdSense Placeholder -->
-    <!-- 구글 애드센스 승인 후 받은 코드를 이 곳에 붙여넣으세요. -->
+    <!-- Place your Google AdSense code here after approval. -->
     <!-- <script async src="https://pagead2.googlesyndication.com/page/js/adsbygoogle.js?client=YOUR_ADSENSE_CLIENT_ID" crossorigin="anonymous"></script> -->
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <button id="home-btn" class="header-btn">홈</button>
-        <h1>악보 읽기 훈련</h1>
+        <button id="home-btn" class="header-btn">Home</button>
+        <h1>Music Sight Reading Practice</h1>
         <button id="theme-toggle-btn" class="header-btn">🌙</button>
     </header>
 
     <main>
         <section id="home-screen" class="screen active">
-            <h2>난이도 선택</h2>
+            <h2>Select Difficulty</h2>
             <div class="difficulty-options-grid">
-                <button class="difficulty-btn" data-difficulty="beginner_treble">초급 (높은음자리표)</button>
-                <button class="difficulty-btn" data-difficulty="beginner_bass">초급 (낮은음자리표)</button>
-                <button class="difficulty-btn" data-difficulty="intermediate_1">중급 1</button>
-                <button class="difficulty-btn" data-difficulty="intermediate_2">중급 2</button>
+                <button class="difficulty-btn" data-difficulty="beginner_treble">Beginner (Treble)</button>
+                <button class="difficulty-btn" data-difficulty="beginner_bass">Beginner (Bass)</button>
+                <button class="difficulty-btn" data-difficulty="intermediate_1">Intermediate 1</button>
+                <button class="difficulty-btn" data-difficulty="intermediate_2">Intermediate 2</button>
             </div>
             <div class="difficulty-options-advanced">
-                 <button class="difficulty-btn" data-difficulty="advanced">고급 (3화음)</button>
+                 <button class="difficulty-btn" data-difficulty="advanced">Advanced (Chords)</button>
             </div>
             <div class="info">
-                <p><strong>초급:</strong> 음자리표 고정, 덧줄 1개 (가온도)</p>
-                <p><strong>중급 1:</strong> 음자리표 랜덤, 덧줄 1개 (가온도)</p>
-                <p><strong>중급 2:</strong> 음자리표 랜덤, 덧줄 3개</p>
-                <p><strong>고급:</strong> 중급 2와 동일한 음역, 3화음으로 표시</p>
+                <p><strong>Beginner:</strong> Fixed Clef, 1 Ledger Line (Middle C)</p>
+                <p><strong>Intermediate 1:</strong> Random Clef, 1 Ledger Line (Middle C)</p>
+                <p><strong>Intermediate 2:</strong> Random Clef, up to 3 Ledger Lines</p>
+                <p><strong>Advanced:</strong> Same range as Intermediate 2, 3-note Chords</p>
             </div>
         </section>
 
         <section id="game-screen" class="screen">
             <div id="game-info">
                 <span id="level-display"></span>
-                <span>제한시간: <span id="timer-display">10</span></span>
+                <span>Time Limit: <span id="timer-display">10</span></span>
             </div>
             <div id="staff-container">
-                <!-- 악보는 여기에 동적으로 생성됩니다 -->
+                <!-- Music staff will be dynamically generated here -->
             </div>
             <div id="answer-options">
-                <!-- 선택지는 여기에 동적으로 생성됩니다 -->
+                <!-- Answer options will be dynamically generated here -->
             </div>
             <div id="feedback"></div>
         </section>
@@ -65,7 +65,7 @@
 
     <footer>
         <!-- Google AdSense Ad Unit Placeholder -->
-        <!-- 애드센스 광고 단위 코드를 이 곳에 붙여넣을 수 있습니다. -->
+        <!-- Your AdSense ad unit code can be placed here. -->
     </footer>
 
     <script src="main.js"></script>
