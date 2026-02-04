@@ -242,7 +242,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentLevelIndex = levelOrder.indexOf(currentDifficulty);
                 if (currentLevelIndex < levelOrder.length - 1) {
                     const nextLevel = levelOrder[currentLevelIndex + 1];
-                    setTimeout(() => startGame(nextLevel), 1500);
+                    feedback.textContent = "Moving to the next level!";
+                    feedback.className = 'correct';
+                    setTimeout(() => startGame(nextLevel), 2000);
                 } else {
                     feedback.textContent = "All levels completed! Congratulations!";
                     setTimeout(goHome, 2000);
