@@ -208,8 +208,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         let options = new Map([[correctNoteInfo.english, correctNoteInfo]]);
+        const isMobile = window.innerWidth <= 600;
+        const numOptions = isMobile ? 4 : 5;
         
-        while (options.size < 5) {
+        while (options.size < numOptions) {
             const randomNote = englishNotes[Math.floor(Math.random() * englishNotes.length)];
             options.set(randomNote.english, randomNote);
         }
