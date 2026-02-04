@@ -217,12 +217,19 @@ main {
 }
 
 .answer-btn {
-    padding: 1rem;
-    font-size: 1.5rem;
+    padding: 0.8rem; /* Slightly reduce padding */
+    font-size: 1.2rem; /* Reduced base font size for the button */
     cursor: pointer;
     border: 1px solid;
     border-radius: 8px;
     transition: background-color 0.3s;
+    line-height: 1.2; /* Ensure good line spacing */
+}
+
+.answer-btn .solfege {
+    display: block; /* Make it a block element to take its own line */
+    font-size: 0.8em; /* Make solfege text smaller relative to the main note */
+    opacity: 0.8; /* Make it slightly less prominent */
 }
 
 .dark-mode .answer-btn {
@@ -306,8 +313,12 @@ main {
     .answer-btn {
         flex: 1; /* Distribute space equally */
         min-width: 80px; /* Ensure a minimum width for each button */
-        font-size: 0.9rem; /* Adjust font size for smaller screens */
+        font-size: 1rem; /* Adjust font size for smaller screens */
         white-space: nowrap; /* Prevent text wrapping inside buttons */
+        padding: 0.5rem; /* Further reduce padding for mobile */
+    }
+    .answer-btn .solfege {
+        font-size: 0.7em; /* Even smaller for mobile */
     }
     .clef {
         font-size: 70px;

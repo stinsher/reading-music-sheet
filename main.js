@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shuffledOptions.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'answer-btn';
-            btn.textContent = `${opt.english} (${opt.solfege})`;
+            btn.innerHTML = `${opt.english}<br><span class="solfege">(${opt.solfege})</span>`;
             btn.dataset.noteName = opt.english;
             btn.addEventListener('click', () => checkAnswer(opt.english));
             answerOptions.appendChild(btn);
