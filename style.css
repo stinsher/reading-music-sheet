@@ -280,8 +280,17 @@ main {
     .info p {
         font-size: 0.9rem;
     }
+    #answer-options {
+        display: flex;
+        flex-wrap: nowrap; /* Prevent wrapping */
+        overflow-x: auto; /* Allow horizontal scrolling if buttons are too wide */
+        justify-content: space-between;
+    }
     .answer-btn {
-        font-size: 1.2rem;
+        flex: 1; /* Distribute space equally */
+        min-width: 80px; /* Ensure a minimum width for each button */
+        font-size: 0.9rem; /* Adjust font size for smaller screens */
+        white-space: nowrap; /* Prevent text wrapping inside buttons */
     }
     .clef {
         font-size: 70px;
