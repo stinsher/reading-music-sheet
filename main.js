@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeBtn = document.getElementById('home-btn');
     const homeScreen = document.getElementById('home-screen');
     const gameScreen = document.getElementById('game-screen');
+    const adminBtn = document.getElementById('admin-btn');
+    const adminScreen = document.getElementById('admin-screen');
+    const postForm = document.getElementById('post-form');
+    const postContent = document.getElementById('post-content');
+    
     const difficultyBtns = document.querySelectorAll('.difficulty-btn');
     
     const levelDisplay = document.getElementById('level-display');
@@ -27,7 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
         C5: { p: 5 }, D5: { p: 6 }, E5: { p: 7 }, F5: { p: 8 }, G5: { p: 9 }, A5: { p: 10 }, B5: { p: 11 }, C6: { p: 12 },
         C2: { p: -4 }, D2: { p: -3 }, E2: { p: -2 }, F2: { p: -1 }, G2: { p: 0 }, A2: { p: 1 }, B2: { p: 2 },
         C3: { p: 3 }, D3: { p: 4 }, E3: { p: 5 }, F3: { p: 6 }, G3: { p: 7 }, A3: { p: 8 }, B3: { p: 9 },
-        C4_bass: { p: 10 }, D4_bass: { p: 11 }, E4_bass: { p: 12 }
+        C4_bass: { p: 10 }, D4_bass: { p: 11 }, E4_bass: { p: 12 },
+        A3_T: { p: -4 }, G3_T: { p: -5 },
+        B1: { p: -5 },
+        G4_bass: { p: 14 }, A4_bass: { p: 15 }
     };
     Object.keys(notes).forEach(key => {
         const noteName = key.replace('_bass', '').slice(0, 1);
@@ -72,8 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         intermediate_2: {
             clef: 'random',
-            trebleNotes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5', 'C6'],
-            bassNotes: ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4_bass', 'D4_bass', 'E4_bass'],
+            trebleNotesAll: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5', 'C6'],
+            bassNotesAll: ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4_bass', 'D4_bass', 'E4_bass'],
+            trebleNotesTwoLedger: ['C6', 'A3_T', 'G3_T'],
+            trebleNotesOneLedgerOrLess: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'D5', 'E5', 'F5', 'G5', 'A5', 'B5'],
+            bassNotesTwoLedger: ['C2', 'E4_bass', 'B1', 'G4_bass', 'A4_bass'],
+            bassNotesOneLedgerOrLess: ['D2', 'E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4_bass', 'D4_bass'],
             displayText: "Intermediate 2 (Random Clef)"
         },
         advanced: {
@@ -111,6 +123,16 @@ document.addEventListener('DOMContentLoaded', () => {
             currentNote = notes[rootNoteName]; // currentNote is the root of the chord for answer checking
             currentChord = chords[clef][rootNoteName].map(noteName => notes[noteName]);
             renderChord(currentChord, clef);
+        } else if (currentDifficulty === 'intermediate_2') {
+            let selectedNoteList;
+            if (Math.random() < 0.4) { // 40% chance for two ledger lines
+                selectedNoteList = clef === 'treble' ? level.trebleNotesTwoLedger : level.bassNotesTwoLedger;
+            } else {
+                selectedNoteList = clef === 'treble' ? level.trebleNotesOneLedgerOrLess : level.bassNotesOneLedgerOrLess;
+            }
+            const randomNoteName = selectedNoteList[Math.floor(Math.random() * selectedNoteList.length)];
+            currentNote = notes[randomNoteName];
+            renderSingleNote(currentNote, clef);
         } else {
             const noteNames = clef === 'treble' ? (level.trebleNotes || level.notes) : (level.bassNotes || level.notes);
             const randomNoteName = noteNames[Math.floor(Math.random() * noteNames.length)];
@@ -308,6 +330,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById(screenId).classList.add('active');
     }
 
+    // Placeholder for admin check
+    function isAdmin() {
+        // In a real application, this would involve proper authentication (e.g., checking a token,
+        // querying a backend, or a more sophisticated client-side check).
+        // For now, we'll return true to allow access.
+        return true; 
+    }
+
     function goHome() {
         clearInterval(timer);
         showScreen('home-screen');
@@ -317,6 +347,26 @@ document.addEventListener('DOMContentLoaded', () => {
     homeBtn.addEventListener('click', goHome);
     difficultyBtns.forEach(btn => {
         btn.addEventListener('click', () => startGame(btn.dataset.difficulty));
+    });
+
+    adminBtn.addEventListener('click', () => {
+        if (isAdmin()) {
+            showScreen('admin-screen');
+        } else {
+            alert('You do not have administrative privileges.');
+        }
+    });
+
+    postForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const content = postContent.value;
+        if (content.trim()) {
+            console.log('New Post Content:', content);
+            alert('Post submitted! (Check console for content)');
+            postContent.value = ''; // Clear the textarea
+        } else {
+            alert('Post content cannot be empty.');
+        }
     });
 
     setInitialTheme();

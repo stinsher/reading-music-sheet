@@ -8,7 +8,7 @@
     <meta name="keywords" content="music reading, sight reading, music training, note identification, music theory, music game, treble clef, bass clef">
     <meta name="author" content="Music Sight Reading">
     <meta property="og:title" content="Music Sheet Reading Practice - Sight Reading Game">
-    <meta property="og:description" content="Improve your sight-reading speed with a fun and interactive game. Offers various difficulty levels.">
+    <meta property="og:description" content="Improve your sight-reading speed with a fun and interactive game, featuring various difficulty levels including up to two ledger lines.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://github.com/stinsher/reading-music-sheet">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3417010634037333"
@@ -18,6 +18,7 @@
 <body>
     <header>
         <button id="home-btn" class="header-btn">Home</button>
+        <button id="admin-btn" class="header-btn">Admin</button>
         <h1>Music Sight Reading Practice</h1>
         <button id="theme-toggle-btn" class="header-btn">🌙</button>
     </header>
@@ -54,6 +55,15 @@
                 <!-- Answer options will be dynamically generated here -->
             </div>
             <div id="feedback"></div>
+        </section>
+
+        <section id="admin-screen" class="screen">
+            <h2>Admin Posting Space</h2>
+            <form id="post-form">
+                <label for="post-content">New Post:</label>
+                <textarea id="post-content" rows="10" cols="50"></textarea>
+                <button type="submit">Create Post</button>
+            </form>
         </section>
     </main>
 
