@@ -418,3 +418,67 @@ main {
     transform: translateY(-2px);
     opacity: 0.9;
 }
+
+#post-list-container {
+    margin-top: 2rem;
+    text-align: left;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.admin-post-item {
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.dark-mode .admin-post-item {
+    background-color: var(--card-bg-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+.light-mode .admin-post-item {
+    background-color: var(--card-bg-color-light);
+    border-color: var(--border-color-light);
+}
+
+.admin-post-item p {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    white-space: pre-wrap; /* Preserve whitespace and line breaks */
+    word-wrap: break-word; /* Break long words */
+}
+
+.admin-post-item small {
+    color: var(--text-color);
+    opacity: 0.7;
+    font-size: 0.8rem;
+}
+
+.dark-mode .admin-post-item small { color: var(--text-color-dark); }
+.light-mode .admin-post-item small { color: var(--text-color-light); }
+
+.delete-post-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--incorrect-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.dark-mode .delete-post-btn { color: var(--incorrect-color-dark); }
+.light-mode .delete-post-btn { color: var(--incorrect-color-light); }
+
+
+.delete-post-btn:hover {
+    opacity: 1;
+}

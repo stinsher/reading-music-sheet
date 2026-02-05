@@ -8,6 +8,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const adminScreen = document.getElementById('admin-screen');
     const postForm = document.getElementById('post-form');
     const postContent = document.getElementById('post-content');
+    const postListContainer = document.getElementById('post-list-container');
+    
+    // --- Post Management ---
+    let posts = []; // Array to store posts
+
+    function loadPosts() {
+        const storedPosts = localStorage.getItem('adminPosts');
+        if (storedPosts) {
+            posts = JSON.parse(storedPosts);
+        } else {
+            posts = [];
+        }
+    }
+
+    function savePosts() {
+        localStorage.setItem('adminPosts', JSON.stringify(posts));
+    }
+
+    function displayPosts() {
+        postListContainer.innerHTML = ''; // Clear existing posts
+        if (posts.length === 0) {
+            postListContainer.innerHTML = '<p>No posts yet.</p>';
+            return;
+        }
+
+        posts.forEach((post, index) => {
+            const postEl = document.createElement('div');
+            postEl.className = 'admin-post-item';
+            postEl.innerHTML = `
+                <p>${post.content}</p>
+                <small>${new Date(post.timestamp).toLocaleString()}</small>
+                <button class="delete-post-btn" data-index="${index}">Delete</button>
+            `;
+            postListContainer.appendChild(postEl);
+        });
+
+        document.querySelectorAll('.delete-post-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const indexToDelete = parseInt(e.target.dataset.index);
+                deletePost(indexToDelete);
+            });
+        });
+    }
+
+    function deletePost(index) {
+        posts.splice(index, 1);
+        savePosts();
+        displayPosts();
+    }
     
     const difficultyBtns = document.querySelectorAll('.difficulty-btn');
     
@@ -352,6 +401,8 @@ document.addEventListener('DOMContentLoaded', () => {
     adminBtn.addEventListener('click', () => {
         if (isAdmin()) {
             showScreen('admin-screen');
+            loadPosts(); // Load posts when admin screen is shown
+            displayPosts(); // Display posts when admin screen is shown
         } else {
             alert('You do not have administrative privileges.');
         }
@@ -361,8 +412,14 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         const content = postContent.value;
         if (content.trim()) {
-            console.log('New Post Content:', content);
-            alert('Post submitted! (Check console for content)');
+            const newPost = {
+                content: content,
+                timestamp: new Date().toISOString(),
+                isAdminPost: true
+            };
+            posts.unshift(newPost); // Add to the beginning of the array
+            savePosts();
+            displayPosts();
             postContent.value = ''; // Clear the textarea
         } else {
             alert('Post content cannot be empty.');
@@ -370,5 +427,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     setInitialTheme();
+    loadPosts(); // Load posts on initial page load
     goHome();
 });
