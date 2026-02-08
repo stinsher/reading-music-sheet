@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Sheet Reading Practice - Sight Reading Game</title>
+    <meta name="description" content="온라인 악보 읽기 연습 게임으로 계이름과 음표를 쉽고 재미있게 배워보세요. 초급부터 고급, 화음 연습까지 다양한 난이도를 제공합니다.">
+    <meta name="keywords" content="music reading, sight reading, music training, note identification, music theory, music game, treble clef, bass clef">
+    <meta name="author" content="Music Sight Reading">
+    <meta property="og:title" content="Music Sheet Reading Practice - Sight Reading Game">
+    <meta property="og:description" content="Improve your sight-reading speed with a fun and interactive game, featuring various difficulty levels including up to two ledger lines.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/stinsher/reading-music-sheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3417010634037333"
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <button id="home-btn" class="header-btn">Home</button>
+        <button id="admin-post-btn" class="header-btn">블로그 포스팅 관리</button>
+
+        <h1>Music Sight Reading Practice</h1>
+        <button id="theme-toggle-btn" class="header-btn">🌙</button>
+    </header>
+
+    <main>
+        <section id="home-screen" class="screen active">
+            <h2>Select Difficulty</h2>
+            <div class="difficulty-options-grid">
+                <button class="difficulty-btn" data-difficulty="beginner_treble">Beginner (Treble)</button>
+                <button class="difficulty-btn" data-difficulty="beginner_bass">Beginner (Bass)</button>
+                <button class="difficulty-btn" data-difficulty="intermediate_1">Intermediate 1</button>
+                <button class="difficulty-btn" data-difficulty="intermediate_2">Intermediate 2</button>
+            </div>
+            <div class="difficulty-options-advanced">
+                 <button class="difficulty-btn" data-difficulty="advanced">Advanced (Chords)</button>
+            </div>
+            <div class="info">
+                <p><strong>Beginner:</strong> Fixed Clef, 1 Ledger Line (Middle C)</p>
+                <p><strong>Intermediate 1:</strong> Random Clef, 1 Ledger Line (Middle C)</p>
+                <p><strong>Intermediate 2:</strong> Random Clef, up to 3 Ledger Lines</p>
+                <p><strong>Advanced:</strong> Same range as Intermediate 2, 3-note Chords</p>
+            </div>
+            <div id="post-list-sidebar" class="post-list-sidebar-home">
+                <h3>블로그 포스팅 (Blog Posts)</h3>
+                <ul id="post-titles-list">
+                    <!-- Post titles will be loaded here by JavaScript -->
+                </ul>
+            </div>
+        </section>
+
+        <section id="game-screen" class="screen">
+            <div id="game-info">
+                <span id="level-display"></span>
+                <span>Time Limit: <span id="timer-display">10</span></span>
+            </div>
+            <div id="staff-container">
+                <!-- Music staff will be dynamically generated here -->
+            </div>
+            <div id="answer-options">
+                <!-- Answer options will be dynamically generated here -->
+            </div>
+            <div id="feedback"></div>
+        </section>
+
+        <section id="admin-post-screen" class="screen">
+            <div id="password-form-container">
+                <h2>관리자 비밀번호 입력 (Enter Admin Password)</h2>
+                <input type="password" id="admin-password-input" placeholder="비밀번호 (Password)">
+                <button id="admin-password-submit">확인 (Submit)</button>
+                <p id="password-feedback" style="color: red;"></p>
+            </div>
+
+            <div id="post-creation-container" style="display: none;">
+                <h2>새 게시글 작성 (Create New Post)</h2>
+                <form id="new-post-form">
+                    <label for="post-title">제목 (Title):</label>
+                    <input type="text" id="post-title" required>
+
+                    <label for="post-content-editor">내용 (Content):</label>
+                    <textarea id="post-content-editor" rows="20"></textarea>
+
+                    <button type="submit">게시글 작성 (Create Post)</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="post-detail-screen" class="screen">
+            <h2 id="post-detail-title"></h2>
+            <div id="post-detail-content"></div>
+            <button id="back-to-home-from-post" class="header-btn">홈으로 돌아가기 (Back to Home)</button>
+        </section>
+
+
+    </main>
+
+    <footer>
+        <!-- Google AdSense Ad Unit Placeholder -->
+        <!-- Your AdSense ad unit code can be placed here. -->
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
