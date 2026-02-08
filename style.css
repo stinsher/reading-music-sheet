@@ -507,6 +507,9 @@ main {
     background-color: var(--primary-color);
     color: white;
     align-self: center; /* Center the button in the flex container */
+    margin-top: 1.5rem; /* Added margin to make it more visible */
+    max-width: 200px; /* Make the button a bit wider */
+    width: 100%; /* Ensure it uses available width up to max-width */
 }
 
 .dark-mode #new-post-form button[type="submit"] {
