@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const adminPostScreen = document.getElementById('admin-post-screen');
     const passwordFormContainer = document.getElementById('password-form-container');
     const adminPasswordInput = document.getElementById('admin-password-input');
-    const adminPasswordSubmit = document.getElementById('admin-password-submit');
+    const adminPasswordForm = document.getElementById('admin-password-form');
     const passwordFeedback = document.getElementById('password-feedback');
     const postCreationContainer = document.getElementById('post-creation-container');
     const newPostForm = document.getElementById('new-post-form');
@@ -412,10 +412,10 @@ document.addEventListener('DOMContentLoaded', () => {
         showScreen('admin-post-screen');
         passwordFeedback.textContent = '';
         adminPasswordInput.value = '';
-        postCreationContainer.style.display = 'none'; // Hide post creation form initially
     });
 
-    adminPasswordSubmit.addEventListener('click', () => {
+    adminPasswordForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent default form submission
         if (adminPasswordInput.value === ADMIN_PASSWORD) {
             passwordFormContainer.style.display = 'none';
             postCreationContainer.style.display = 'block';

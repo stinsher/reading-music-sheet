@@ -67,8 +67,10 @@
         <section id="admin-post-screen" class="screen">
             <div id="password-form-container">
                 <h2>관리자 비밀번호 입력 (Enter Admin Password)</h2>
-                <input type="password" id="admin-password-input" placeholder="비밀번호 (Password)">
-                <button id="admin-password-submit">확인 (Submit)</button>
+                <form id="admin-password-form">
+                    <input type="password" id="admin-password-input" placeholder="비밀번호 (Password)">
+                    <button type="submit" id="admin-password-submit">로그인 (Login)</button>
+                </form>
                 <p id="password-feedback" style="color: red;"></p>
             </div>
 
