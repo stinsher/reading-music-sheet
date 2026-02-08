@@ -5,6 +5,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeScreen = document.getElementById('home-screen');
     const gameScreen = document.getElementById('game-screen');
 
+    const adminPostBtn = document.getElementById('admin-post-btn');
+    const adminPostScreen = document.getElementById('admin-post-screen');
+    const passwordFormContainer = document.getElementById('password-form-container');
+    const adminPasswordInput = document.getElementById('admin-password-input');
+    const adminPasswordSubmit = document.getElementById('admin-password-submit');
+    const passwordFeedback = document.getElementById('password-feedback');
+    const postCreationContainer = document.getElementById('post-creation-container');
+    const newPostForm = document.getElementById('new-post-form');
+    const postTitleInput = document.getElementById('post-title');
+    const postContentEditor = document.getElementById('post-content-editor');
+
+    const postDetailScreen = document.getElementById('post-detail-screen');
+    const postDetailTitle = document.getElementById('post-detail-title');
+    const postDetailContent = document.getElementById('post-detail-content');
+    const backToHomeFromPostBtn = document.getElementById('back-to-home-from-post');
+    const postTitlesList = document.getElementById('post-titles-list');
+
     
 
     
@@ -334,16 +351,119 @@ document.addEventListener('DOMContentLoaded', () => {
     function goHome() {
         clearInterval(timer);
         showScreen('home-screen');
+        updateMetaTags('Music Sheet Reading Practice - Sight Reading Game', '온라인 악보 읽기 연습 게임으로 계이름과 음표를 쉽고 재미있게 배워보세요. 초급부터 고급, 화음 연습까지 다양한 난이도를 제공합니다.', 'music reading, sight reading, music training, note identification, music theory, music game, treble clef, bass clef');
+        displayPostTitles(); // Display posts on home screen
+    }
+
+    // --- Admin & Blog Logic ---
+    const ADMIN_PASSWORD = 'sysy1121**'; 
+
+
+
+    let blogPosts = [];
+
+    function loadBlogPosts() {
+        const storedPosts = localStorage.getItem('blogPosts');
+        if (storedPosts) {
+            blogPosts = JSON.parse(storedPosts);
+        } else {
+            blogPosts = [];
+        }
+    }
+
+    function saveBlogPosts() {
+        localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
+    }
+
+    function displayPostTitles() {
+        postTitlesList.innerHTML = ''; // Clear existing titles
+        if (blogPosts.length === 0) {
+            postTitlesList.innerHTML = '<li>게시글이 없습니다. (No posts yet.)</li>';
+            return;
+        }
+
+        blogPosts.forEach(post => {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = '#';
+            link.dataset.postId = post.id;
+            link.textContent = post.title;
+            listItem.appendChild(link);
+            postTitlesList.appendChild(listItem);
+        });
+    }
+
+    function renderBlogPost(postId) {
+        const post = blogPosts.find(p => p.id === postId);
+        if (post) {
+            postDetailTitle.textContent = post.title;
+            postDetailContent.innerHTML = post.content;
+            showScreen('post-detail-screen');
+            updateMetaTags(post.title, post.description, post.keywords);
+        } else {
+            alert('게시글을 찾을 수 없습니다. (Post not found.)');
+            goHome();
+        }
     }
 
     themeToggleBtn.addEventListener('click', toggleTheme);
     homeBtn.addEventListener('click', goHome);
+    adminPostBtn.addEventListener('click', () => {
+        showScreen('admin-post-screen');
+        passwordFeedback.textContent = '';
+        adminPasswordInput.value = '';
+        postCreationContainer.style.display = 'none'; // Hide post creation form initially
+    });
+
+    adminPasswordSubmit.addEventListener('click', () => {
+        if (adminPasswordInput.value === ADMIN_PASSWORD) {
+            passwordFormContainer.style.display = 'none';
+            postCreationContainer.style.display = 'block';
+            passwordFeedback.textContent = '';
+        } else {
+            passwordFeedback.textContent = '잘못된 비밀번호입니다. (Incorrect password.)';
+        }
+    });
+
+    newPostForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const title = postTitleInput.value;
+        const content = postContentEditor.value;
+
+        if (title.trim() && content.trim()) {
+            const newPost = {
+                id: Date.now().toString(), // Simple unique ID
+                title: title,
+                content: content,
+                timestamp: new Date().toLocaleString(),
+                description: content.substring(0, 150) + '...', // First 150 chars as description
+                keywords: title.split(' ').join(', ') // Keywords from title words
+            };
+            blogPosts.unshift(newPost); // Add to the beginning
+            saveBlogPosts();
+            displayPostTitles();
+            alert('게시글이 성공적으로 작성되었습니다! (Post created successfully!)');
+            postTitleInput.value = '';
+            postContentEditor.value = '';
+            goHome(); // Go back to home after posting
+        } else {
+            alert('제목과 내용을 모두 입력해주세요. (Please enter both title and content.)');
+        }
+    });
+
+    postTitlesList.addEventListener('click', (event) => {
+        if (event.target.tagName === 'A' && event.target.dataset.postId) {
+            event.preventDefault();
+            renderBlogPost(event.target.dataset.postId);
+        }
+    });
+
+    backToHomeFromPostBtn.addEventListener('click', goHome);
+
     difficultyBtns.forEach(btn => {
         btn.addEventListener('click', () => startGame(btn.dataset.difficulty));
     });
 
-
-
-
+    loadBlogPosts(); // Load posts on initial page load
     goHome();
 });

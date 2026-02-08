@@ -18,6 +18,7 @@
 <body>
     <header>
         <button id="home-btn" class="header-btn">Home</button>
+        <button id="admin-post-btn" class="header-btn">블로그 포스팅 관리</button>
 
         <h1>Music Sight Reading Practice</h1>
         <button id="theme-toggle-btn" class="header-btn">🌙</button>
@@ -41,6 +42,12 @@
                 <p><strong>Intermediate 2:</strong> Random Clef, up to 3 Ledger Lines</p>
                 <p><strong>Advanced:</strong> Same range as Intermediate 2, 3-note Chords</p>
             </div>
+            <div id="post-list-sidebar" class="post-list-sidebar-home">
+                <h3>블로그 포스팅 (Blog Posts)</h3>
+                <ul id="post-titles-list">
+                    <!-- Post titles will be loaded here by JavaScript -->
+                </ul>
+            </div>
         </section>
 
         <section id="game-screen" class="screen">
@@ -55,6 +62,34 @@
                 <!-- Answer options will be dynamically generated here -->
             </div>
             <div id="feedback"></div>
+        </section>
+
+        <section id="admin-post-screen" class="screen">
+            <div id="password-form-container">
+                <h2>관리자 비밀번호 입력 (Enter Admin Password)</h2>
+                <input type="password" id="admin-password-input" placeholder="비밀번호 (Password)">
+                <button id="admin-password-submit">확인 (Submit)</button>
+                <p id="password-feedback" style="color: red;"></p>
+            </div>
+
+            <div id="post-creation-container" style="display: none;">
+                <h2>새 게시글 작성 (Create New Post)</h2>
+                <form id="new-post-form">
+                    <label for="post-title">제목 (Title):</label>
+                    <input type="text" id="post-title" required>
+
+                    <label for="post-content-editor">내용 (Content):</label>
+                    <textarea id="post-content-editor" rows="20"></textarea>
+
+                    <button type="submit">게시글 작성 (Create Post)</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="post-detail-screen" class="screen">
+            <h2 id="post-detail-title"></h2>
+            <div id="post-detail-content"></div>
+            <button id="back-to-home-from-post" class="header-btn">홈으로 돌아가기 (Back to Home)</button>
         </section>
 
 
