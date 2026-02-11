@@ -377,7 +377,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 content: '<p>이것은 첫 번째 샘플 블로그 게시물입니다. 여기에 내용을 추가할 수 있습니다.</p><p>Welcome to your first sample blog post! You can add your content here.</p>',
                 timestamp: new Date().toLocaleString(),
                 description: '이것은 첫 번째 샘블 블로그 게시물입니다...',
-                keywords: '첫 번째, 블로그, 샘플, 게시물'
+                keywords: '첫 번째, 블로그, 샘플, 게시물',
+                published: true // Explicitly mark as published
             },
             {
                 id: '2',
@@ -385,7 +386,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 content: '<p>음악 이론은 처음에는 어려울 수 있지만, 몇 가지 팁으로 더 쉽게 접근할 수 있습니다.</p><ul><li>매일 조금씩 연습하세요.</li><li>시창 연습을 꾸준히 하세요.</li><li>좋아하는 음악에 이론을 적용해 보세요.</li></ul><p>Music theory can be challenging at first, but a few tips can make it more accessible.</p><ul><li>Practice a little every day.</li><li>Consistently practice sight-singing.</li><li>Apply theory to your favorite music.</li></ul>',
                 timestamp: new Date(Date.now() - 86400000).toLocaleString(), // One day ago
                 description: '음악 이론은 처음에는 어려울 수 있지만, 몇 가지 팁으로 더 쉽게 접근할 수 있습니다...',
-                keywords: '음악 이론, 학습, 팁, 연습, 시창'
+                keywords: '음악 이론, 학습, 팁, 연습, 시창',
+                published: true // Explicitly mark as published
             }
         ];
 
@@ -408,12 +410,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayPostTitles() {
         postTitlesList.innerHTML = ''; // Clear existing titles
-        if (blogPosts.length === 0) {
+        
+        // Filter to only show published posts
+        const publishedPosts = blogPosts.filter(post => post.published);
+
+        if (publishedPosts.length === 0) {
             postTitlesList.innerHTML = '<li>게시글이 없습니다. (No posts yet.)</li>';
             return;
         }
 
-        blogPosts.forEach(post => {
+        publishedPosts.forEach(post => {
             const listItem = document.createElement('li');
             const link = document.createElement('a');
             link.href = '#';
@@ -468,7 +474,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 content: content,
                 timestamp: new Date().toLocaleString(),
                 description: content.substring(0, 150) + '...', // First 150 chars as description
-                keywords: title.split(' ').join(', ') // Keywords from title words
+                keywords: title.split(' ').join(', '),
+                published: true // Explicitly mark as published
             };
             blogPosts.unshift(newPost); // Add to the beginning
             saveBlogPosts();

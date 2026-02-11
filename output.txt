@@ -1,17 +1,26 @@
-I have modified `main.js` to include default blog posts. Now, when you open the application, you should see two default blog posts listed on the home screen if no posts were previously saved in your browser's local storage.
+I have made further modifications to `main.js` to ensure that blog posts are always visible on the home screen, even if you previously had existing data in your browser's local storage. This new change merges the default posts with any posts you might have already created.
 
-To see the changes:
+To verify these changes, it's crucial to ensure your browser is loading the latest version of the code and not using cached data.
 
-1.  **Run a local server:** Open your terminal in the `/home/user/reading-music-sheet` directory and run the command:
+Here’s how you can test the updated application:
+
+1.  **Clear Browser Data (Highly Recommended):**
+    *   Open your browser's developer tools (usually by pressing F12 or right-clicking on the page and selecting "Inspect").
+    *   Go to the "Application" or "Storage" tab.
+    *   Find "Local Storage" under the "Storage" section.
+    *   Expand it and right-click on the URL of your application (e.g., `http://localhost:3000`).
+    *   Select "Clear" or "Delete All". This will remove any old blog post data that might be conflicting.
+
+2.  **Run a local server (if not already running):** Open your terminal in the `/home/user/reading-music-sheet` directory and run the command:
     ```bash
     npx serve .
     ```
     If prompted to install `serve`, type `y` and press Enter.
 
-2.  **Access the application:** Once the server is running, open your web browser and navigate to the address provided by `npx serve` (usually `http://localhost:3000`).
+3.  **Access the application:** Once the server is running, open your web browser and navigate to the address provided by `npx serve` (usually `http://localhost:3000`). If the page was already open, do a hard refresh (Ctrl+Shift+R or Cmd+Shift+R).
 
-3.  **Verify the changes:** You should now see "첫 번째 블로그 게시물 (First Blog Post)" and "음악 이론 학습 팁 (Music Theory Learning Tips)" listed under "블로그 포스팅 (Blog Posts)" on the home screen.
+4.  **Verify the changes:** You should now reliably see the default blog posts ("첫 번째 블로그 게시물" and "음악 이론 학습 팁") listed under "블로그 포스팅 (Blog Posts)" on the home screen, along with any posts you may have created previously.
 
-Alternatively, you can simply open the `index.html` file directly in your web browser, but running a local server is generally recommended for web applications to ensure all assets load correctly.
+I have also completed the deployment by pushing the latest changes to your GitHub repository.
 
-Please let me know if you have any further questions or if the changes are not working as expected!
+Please try these steps and let me know if the issue is resolved this time!
