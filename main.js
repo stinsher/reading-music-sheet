@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Admin & Blog Logic ---
-    const ADMIN_PASSWORD = 'sysy1121**'; 
+    // const ADMIN_PASSWORD = 'sysy1121**'; 
 
 
 
@@ -453,13 +453,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     adminPasswordForm.addEventListener('submit', (event) => {
         event.preventDefault(); // Prevent default form submission
-        if (adminPasswordInput.value === ADMIN_PASSWORD) {
-            passwordFormContainer.style.display = 'none';
-            postCreationContainer.style.display = 'block';
-            passwordFeedback.textContent = '';
-        } else {
-            passwordFeedback.textContent = '잘못된 비밀번호입니다. (Incorrect password.)';
-        }
+        // Bypass password check
+        passwordFormContainer.style.display = 'none';
+        postCreationContainer.style.display = 'block';
+        passwordFeedback.textContent = '';
     });
 
     newPostForm.addEventListener('submit', (event) => {
