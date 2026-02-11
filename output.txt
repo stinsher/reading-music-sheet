@@ -1,0 +1,17 @@
+I have modified `main.js` to include default blog posts. Now, when you open the application, you should see two default blog posts listed on the home screen if no posts were previously saved in your browser's local storage.
+
+To see the changes:
+
+1.  **Run a local server:** Open your terminal in the `/home/user/reading-music-sheet` directory and run the command:
+    ```bash
+    npx serve .
+    ```
+    If prompted to install `serve`, type `y` and press Enter.
+
+2.  **Access the application:** Once the server is running, open your web browser and navigate to the address provided by `npx serve` (usually `http://localhost:3000`).
+
+3.  **Verify the changes:** You should now see "첫 번째 블로그 게시물 (First Blog Post)" and "음악 이론 학습 팁 (Music Theory Learning Tips)" listed under "블로그 포스팅 (Blog Posts)" on the home screen.
+
+Alternatively, you can simply open the `index.html` file directly in your web browser, but running a local server is generally recommended for web applications to ensure all assets load correctly.
+
+Please let me know if you have any further questions or if the changes are not working as expected!
