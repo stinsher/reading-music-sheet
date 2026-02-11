@@ -367,27 +367,39 @@ document.addEventListener('DOMContentLoaded', () => {
         if (storedPosts) {
             blogPosts = JSON.parse(storedPosts);
         } else {
-            // Default posts if none are found in localStorage
-            blogPosts = [
-                {
-                    id: '1',
-                    title: '첫 번째 블로그 게시물 (First Blog Post)',
-                    content: '<p>이것은 첫 번째 샘플 블로그 게시물입니다. 여기에 내용을 추가할 수 있습니다.</p><p>Welcome to your first sample blog post! You can add your content here.</p>',
-                    timestamp: new Date().toLocaleString(),
-                    description: '이것은 첫 번째 샘플 블로그 게시물입니다...',
-                    keywords: '첫 번째, 블로그, 샘플, 게시물'
-                },
-                {
-                    id: '2',
-                    title: '음악 이론 학습 팁 (Music Theory Learning Tips)',
-                    content: '<p>음악 이론은 처음에는 어려울 수 있지만, 몇 가지 팁으로 더 쉽게 접근할 수 있습니다.</p><ul><li>매일 조금씩 연습하세요.</li><li>시창 연습을 꾸준히 하세요.</li><li>좋아하는 음악에 이론을 적용해 보세요.</li></ul><p>Music theory can be challenging at first, but a few tips can make it more accessible.</p><ul><li>Practice a little every day.</li><li>Consistently practice sight-singing.</li><li>Apply theory to your favorite music.</li></ul>',
-                    timestamp: new Date(Date.now() - 86400000).toLocaleString(), // One day ago
-                    description: '음악 이론은 처음에는 어려울 수 있지만, 몇 가지 팁으로 더 쉽게 접근할 수 있습니다...',
-                    keywords: '음악 이론, 학습, 팁, 연습, 시창'
-                }
-            ];
-            saveBlogPosts(); // Save default posts to localStorage
+            blogPosts = []; // Initialize empty if nothing stored
         }
+
+        const defaultPosts = [
+            {
+                id: '1',
+                title: '첫 번째 블로그 게시물 (First Blog Post)',
+                content: '<p>이것은 첫 번째 샘플 블로그 게시물입니다. 여기에 내용을 추가할 수 있습니다.</p><p>Welcome to your first sample blog post! You can add your content here.</p>',
+                timestamp: new Date().toLocaleString(),
+                description: '이것은 첫 번째 샘블 블로그 게시물입니다...',
+                keywords: '첫 번째, 블로그, 샘플, 게시물'
+            },
+            {
+                id: '2',
+                title: '음악 이론 학습 팁 (Music Theory Learning Tips)',
+                content: '<p>음악 이론은 처음에는 어려울 수 있지만, 몇 가지 팁으로 더 쉽게 접근할 수 있습니다.</p><ul><li>매일 조금씩 연습하세요.</li><li>시창 연습을 꾸준히 하세요.</li><li>좋아하는 음악에 이론을 적용해 보세요.</li></ul><p>Music theory can be challenging at first, but a few tips can make it more accessible.</p><ul><li>Practice a little every day.</li><li>Consistently practice sight-singing.</li><li>Apply theory to your favorite music.</li></ul>',
+                timestamp: new Date(Date.now() - 86400000).toLocaleString(), // One day ago
+                description: '음악 이론은 처음에는 어려울 수 있지만, 몇 가지 팁으로 더 쉽게 접근할 수 있습니다...',
+                keywords: '음악 이론, 학습, 팁, 연습, 시창'
+            }
+        ];
+
+        // Add default posts if they don't already exist
+        defaultPosts.forEach(defaultPost => {
+            if (!blogPosts.some(post => post.id === defaultPost.id)) {
+                blogPosts.push(defaultPost);
+            }
+        });
+        
+        // Sort posts by ID in descending order (assuming ID represents creation order)
+        blogPosts.sort((a, b) => parseInt(b.id) - parseInt(a.id));
+
+        saveBlogPosts(); // Always save to ensure defaults are persisted and displayed
     }
 
     function saveBlogPosts() {
